@@ -35,6 +35,9 @@ Thumbs.db
 # Application properties (if sensitive)
 application.properties
 application.yml
+application.yaml
+**/application.yml
+**/application.yaml
 
 # Jar files
 *.jar
