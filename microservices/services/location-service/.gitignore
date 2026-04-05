@@ -32,4 +32,8 @@ build/
 ### VS Code ###
 .vscode/
 
-src/main/resources/application.yaml
+# 🔥 Ignore ALL YAML config files (Best for microservices)
+application.yml
+application.yaml
+**/application.yml
+**/application.yaml
