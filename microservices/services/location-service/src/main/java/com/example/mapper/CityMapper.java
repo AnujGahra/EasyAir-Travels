@@ -6,7 +6,7 @@ import com.example.payload.response.CityResponse;
 
 public class CityMapper {
 
-    public static City getCity(CityRequest request) {
+    public static City toEntity(CityRequest request) {
         if(request == null) return null;
 
         return City.builder()
