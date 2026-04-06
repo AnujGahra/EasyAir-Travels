@@ -14,6 +14,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class GeoCode {
 
-    private Double lattitude;
+    private Double latitude;
     private Double longitude;
 }
