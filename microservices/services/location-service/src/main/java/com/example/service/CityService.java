@@ -9,10 +9,10 @@ import org.springframework.data.domain.Pageable;
 
 public interface CityService {
 
-    CityResponse createCity(CityRequest request);
-    CityResponse getCityById(Long id);
+    CityResponse createCity(CityRequest request) throws Exception;
+    CityResponse getCityById(Long id) throws Exception;
 
-    CityResponse updateCity(Long id, CityRequest cityRequest);
+    CityResponse updateCity(Long id, CityRequest cityRequest) throws Exception;
     void deleteCity(Long id);
 
     Page<CityResponse> searchCities(String keyword, Pageable pageable);
