@@ -11,7 +11,7 @@ import org.springframework.data.jpa.repository.Query;
 public interface CityRepository extends JpaRepository<City, Long> {
 
     boolean existsByCityCode(String cityCode);
-    boolean existsByCitiesAndIdNot(String cityCode, Long id);
+//    boolean existsByCitiesAndIdNot(String cityCode, Long id);
     Page<City> findByCountryCodeIgnoreCase(String countryCode, Pageable pageable);
 
 
@@ -23,7 +23,7 @@ public interface CityRepository extends JpaRepository<City, Long> {
         or lower(c.countryName) like lower(concat('%', :keyword, '%'))
         or lower(c.regionCode) like lower(concat('%', :keyword, '%'))
         """)
-    
+
     Page<City> searchByKeyword(String keyword, Pageable pageable);
 
 }

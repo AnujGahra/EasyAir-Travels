@@ -27,7 +27,7 @@ public class CityController {
         return ResponseEntity.status(HttpStatus.CREATED).body(res);
     }
 
-    @GetMapping("/{id")
+    @GetMapping("/{id}")
     public ResponseEntity<CityResponse> getCity(@PathVariable Long id) throws Exception {
         CityResponse res = cityService.getCityById(id);
         return ResponseEntity.status(HttpStatus.CREATED).body(res);
