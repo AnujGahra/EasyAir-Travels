@@ -54,27 +54,32 @@ public class CityServiceImpl implements CityService {
     }
 
     @Override
-    public void deleteCity(Long id) {
+    public void deleteCity(Long id) throws Exception {
+        City city = cityRepository.findById(id).orElseThrow(
+                ()-> new Exception("city not exit with given id")
+        );
 
+        cityRepository.delete(city);
+    }
+
+    @Override
+    public Page<CityResponse> getAllCities(Pageable pageable) {
+        return cityRepository.findAll(pageable).map(CityMapper::toResponse);
     }
 
     @Override
     public Page<CityResponse> searchCities(String keyword, Pageable pageable) {
-        return null;
+        return cityRepository.searchByKeyword(keyword, pageable).map(CityMapper::toResponse);
     }
 
     @Override
     public Page<CityResponse> getCitiesByCountryCode(String countryCode, Pageable pageable) {
-        return null;
+        return cityRepository.findByCountryCodeIgnoreCase(countryCode, pageable).map(CityMapper::toResponse);
     }
 
     @Override
     public boolean cityExists(String cityCode) {
-        return false;
+        return cityRepository.existsByCityCode(cityCode);
     }
 
-    @Override
-    public boolean validateCityCode(String cityCode) {
-        return false;
-    }
 }
