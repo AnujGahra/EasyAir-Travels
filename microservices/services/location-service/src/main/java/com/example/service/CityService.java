@@ -1,5 +1,6 @@
 package com.example.service;
 
+import com.example.payload.request.CityRequest;
 import com.example.payload.response.CityResponse;
 
 public interface CityService {
