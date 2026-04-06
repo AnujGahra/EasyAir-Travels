@@ -1,0 +1,42 @@
+package com.example.model;
+
+
+import com.example.embeddable.Address;
+import com.example.embeddable.GeoCode;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import lombok.*;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Entity
+public class Airport {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    @Column(unique = true, nullable = false, length = 3)
+    private String iataCode;
+
+    @Column(nullable = false)
+    private String name;
+
+    @Embedded
+    private Address address;
+
+    @Embedded
+    private GeoCode geoCode;
+
+
+    @Column(name = "time_zone_id", length = 50)
+    private String timeZoneId;
+
+    @ManyToOne
+    @JsonIgnore
+    private City city;
+
+}
