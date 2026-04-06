@@ -30,4 +30,25 @@ public class CityMapper {
                 .regionCode(city.getRegionCode())
                 .build();
     }
+
+    public static City updateEntity(City city, CityRequest request) {
+        if(request.getName() != null) {
+            city.setName(request.getName().trim());
+        }
+        if(request.getCityCode() != null) {
+            city.setCityCode(request.getCityCode().toUpperCase().trim());
+        }
+        if(request.getCountryCode() != null) {
+            city.setCountryCode(request.getCountryCode().toUpperCase().trim());
+        }
+        if(request.getCountryName() != null) {
+            city.setCountryName(request.getCountryName().trim());
+        }
+
+        if(request.getRegionCode() != null) {
+            city.setRegionCode(request.getRegionCode().toUpperCase().trim());
+        }
+
+        return city;
+    }
 }
