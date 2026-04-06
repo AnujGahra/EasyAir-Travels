@@ -1,45 +1,90 @@
 package com.example.service.impl;
 
+import com.example.mapper.AirportMapper;
+import com.example.model.Airport;
+import com.example.model.City;
 import com.example.payload.request.AirportRequest;
 import com.example.payload.response.AirportResponse;
+import com.example.repository.AirportRepository;
+import com.example.repository.CityRepository;
 import com.example.service.AirportService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class AirportServiceImpl implements AirportService {
 
-    
-    @Override
-    public AirportResponse createAirport(AirportRequest request) {
-        return null;
-    }
+
+    private final AirportRepository airportRepository;
+    private final CityRepository cityRepository;
 
     @Override
-    public AirportResponse getAirportById(Long id) {
-        return null;
+    public AirportResponse createAirport(AirportRequest request) throws Exception {
+
+        if(airportRepository.findByIataCode(request.getIataCode()).isPresent()){
+            throw new Exception("Airport with Iata Code Already Exist");
+        }
+
+        City city = cityRepository.findById(request.getCityId())
+                .orElseThrow(() -> new Exception("City not found"));
+        Airport airport = AirportMapper.toEntity(request);
+        airport.setCity(city);
+
+        Airport savedAirport = airportRepository.save(airport);
+
+        return AirportMapper.toResponse(savedAirport);
+    }
+    @Override
+    public AirportResponse getAirportById(Long id) throws Exception {
+        Airport airport = airportRepository.findById(id).orElseThrow(
+                () -> new Exception("airport not exist with provided id")
+        );
+        return AirportMapper.toResponse(airport);
     }
 
     @Override
     public List<AirportResponse> getAllAirports() {
-        return List.of();
+        return airportRepository.findAll().stream()
+                .map(AirportMapper::toResponse)
+                .collect(Collectors.toList());
     }
 
     @Override
-    public AirportResponse updateAirport(Long id, AirportRequest request) {
-        return null;
+    public AirportResponse updateAirport(Long id, AirportRequest request) throws Exception {
+        Airport existingAirport = airportRepository.findById(id).orElseThrow(
+                () -> new Exception("airport not exist with id " +id)
+        );
+
+        if(request.getIataCode()!=null
+                && !existingAirport.getIataCode().equals(request.getIataCode())
+                && airportRepository.findByIataCode(request.getIataCode()).isPresent()
+        ){
+            throw new Exception("Airport with Iata Code Already Exist");
+        }
+
+        AirportMapper.updateEntity(request, existingAirport);
+        Airport updatedAirport=airportRepository.save(existingAirport);
+        return AirportMapper.toResponse(updatedAirport);
     }
 
     @Override
-    public void deleteAirport(Long id) {
-
+    public void deleteAirport(Long id) throws Exception {
+        Airport airport = airportRepository.findById(id).orElseThrow(
+                () -> new Exception("airport not exist with provided id")
+        );
+        airportRepository.delete(airport);
     }
 
     @Override
     public List<AirportResponse> getAirportByCityId(Long cityId) {
-        return List.of();
+        return airportRepository.findByCityId(cityId).stream()
+                .map(AirportMapper::toResponse)
+                .collect(Collectors.toList());
     }
+
+
 }
