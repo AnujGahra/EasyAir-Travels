@@ -149,7 +149,7 @@ Payment → Booking → Seat → Notification
 
 ```bash
 # Clone repository
-git clone https://github.com/your-username/airline-booking-platform.git
+git clone https://github.com/AnujGahra/EasyAir-Travels.git
 
 # Start services
 docker-compose up --build
