@@ -28,6 +28,9 @@ public class User {
     private String phone;
 
     @Column(nullable = false)
+    private String password;
+
+    @Column(nullable = false)
     private UserRole role;
 
 
