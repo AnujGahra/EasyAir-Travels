@@ -1,6 +1,4 @@
-Here’s a **clean, professional, GitHub-ready README.md** for your project 👇
 
----
 
 # ✈️ Airline Booking Platform (Microservices + Kafka)
 
