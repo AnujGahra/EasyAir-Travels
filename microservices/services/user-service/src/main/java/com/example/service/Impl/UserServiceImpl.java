@@ -1,5 +1,7 @@
 package com.example.service.Impl;
 
+import com.example.dto.UserDTO;
+import com.example.mapper.UserMapper;
 import com.example.model.User;
 import com.example.repository.UserRepository;
 import com.example.service.UserService;
@@ -17,24 +19,27 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     @Override
-    public User getUserByEmail(String email) throws Exception {
+    public UserDTO getUserByEmail(String email) throws Exception {
         User user=userRepository.findByEmail(email);
         if(user==null){
             throw new Exception("user not found with email");
         }
-        return user;
+        return UserMapper.toDTO(user);
     }
 
     @Override
-    public User getUserById(Long id) throws Exception {
-        return userRepository.findById(id).orElseThrow(
+    public UserDTO getUserById(Long id) throws Exception {
+        User user =  userRepository.findById(id).orElseThrow(
                 ()->new Exception("user not found with id "+id)
         );
+        return UserMapper.toDTO(user);
     }
 
     @Override
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public List<UserDTO> getAllUsers() {
+        List<User> users =  userRepository.findAll();
+
+        return UserMapper.toDTOList(users);
     }
 
 
